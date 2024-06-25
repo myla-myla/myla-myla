@@ -1,0 +1,70 @@
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+# Load the user-provided brain image
+img_path = 'path_to_your_image.png'  # Remplacez 'path_to_your_image.png' par le chemin de votre image
+brain_img = mpimg.imread(img_path)
+
+# Create a figure
+fig, ax = plt.subplots(figsize=(12, 8))
+
+# Display the brain image
+ax.imshow(brain_img)
+
+# Define the positions of the brain areas on the brain image
+brain_areas_positions = {
+    "Aire tegmentale ventrale (VTA)": (270, 430),
+    "Noyau accumbens (Striatum ventral)": (290, 480),
+    "Amygdale": (320, 570),
+    "Hippocampe": (310, 630),
+    "Hypothalamus": (350, 500),
+    "Cortex préfrontal": (700, 150),
+    "Cortex orbitofrontal": (670, 220),
+    "Cortex cingulaire antérieur": (600, 300),
+    "Cortex insulaire": (500, 350),
+    "Thalamus": (450, 450),
+    "Septum": (400, 500),
+    "Cortex temporal (Gyrus temporal supérieur)": (500, 550),
+    "Cortex pariétal": (650, 450)
+}
+
+# Draw nodes (brain areas)
+for area, pos in brain_areas_positions.items():
+    ax.text(pos[0], pos[1], area, ha='center', va='center', fontsize=8, bbox=dict(facecolor='skyblue', boxstyle='round,pad=0.3'))
+
+# Draw edges (connections)
+connections = [
+    ("Aire tegmentale ventrale (VTA)", "Noyau accumbens (Striatum ventral)"),
+    ("Aire tegmentale ventrale (VTA)", "Amygdale"),
+    ("Aire tegmentale ventrale (VTA)", "Hippocampe"),
+    ("Aire tegmentale ventrale (VTA)", "Cortex préfrontal"),
+    ("Noyau accumbens (Striatum ventral)", "Hypothalamus"),
+    ("Noyau accumbens (Striatum ventral)", "Cortex préfrontal"),
+    ("Amygdale", "Hippocampe"),
+    ("Amygdale", "Cortex préfrontal"),
+    ("Amygdale", "Hypothalamus"),
+    ("Hippocampe", "Cortex préfrontal"),
+    ("Hypothalamus", "Cortex cingulaire antérieur"),
+    ("Cortex préfrontal", "Cortex orbitofrontal"),
+    ("Cortex préfrontal", "Cortex cingulaire antérieur"),
+    ("Cortex préfrontal", "Cortex insulaire"),
+    ("Cortex cingulaire antérieur", "Thalamus"),
+    ("Cortex insulaire", "Thalamus"),
+    ("Thalamus", "Cortex temporal (Gyrus temporal supérieur)"),
+    ("Cortex temporal (Gyrus temporal supérieur)", "Cortex pariétal")
+]
+
+for connection in connections:
+    start_pos = brain_areas_positions[connection[0]]
+    end_pos = brain_areas_positions[connection[1]]
+    ax.annotate("",
+                xy=end_pos, xycoords='data',
+                xytext=start_pos, textcoords='data',
+                arrowprops=dict(arrowstyle="->", color='gray', lw=1.5))
+
+# Set title
+ax.set_title("Aires du Cerveau Impliquées dans le Coup de Foudre", fontsize=15)
+ax.axis('off')
+
+# Show plot
+plt.show()
